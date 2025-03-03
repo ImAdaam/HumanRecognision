@@ -53,7 +53,6 @@ def analyse_with_return(source):
 
         if found_classes:
             print(f"Detected: {', '.join(found_classes)}")
-            # results[0].show()
-            return True, results[0] # TODO: fix so its visible
+            return True, results[0]
 
     return False, results[0]
