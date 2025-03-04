@@ -16,6 +16,7 @@ class Sighting:
         self.folder = folder
         self.sightings_count = 0
 
+    # TODO: deletes wrong side i think
     def add_frame_before(self, frame):
         if self.sightings_count < 1:
             if len(self.frames_before) > self.frames_to_save:
@@ -42,6 +43,7 @@ class Sighting:
                 self.frames_before.extend(array)
                 self.frames_to_save_before = 0
 
+    # TODO: is this correct ?
     def add_sighting(self, frame):
         self.sighting.append(frame)
         self.sightings_count += 1
@@ -69,32 +71,32 @@ class Sighting:
         os.makedirs(self.folder, exist_ok=True)
 
         # TODO: have to wait for each other
-        # t1 = threading.Thread(target=self.save_prev_frames())
-        # t2 = threading.Thread(target=self.save_sighting_frames())
-        # t3 = threading.Thread(target=self.save_after_frames())
-        #
-        # t1.start()
-        # t2.start()
-        # t3.start()
+        t1 = threading.Thread(target=self.save_prev_frames())
+        t2 = threading.Thread(target=self.save_sighting_frames())
+        t3 = threading.Thread(target=self.save_after_frames())
 
-        self.save_prev_frames()
-        self.save_sighting_frames()
-        self.save_after_frames()
+        t1.start()
+        t2.start()
+        t3.start()
+
+        # self.save_prev_frames()
+        # self.save_sighting_frames()
+        # self.save_after_frames()
 
 
     def save_prev_frames(self):
         for _id, _frame in enumerate(self.frames_before):
-            frame_filename = os.path.join(self.folder, f"frame_prev_{_id}.jpg")
+            frame_filename = os.path.join(self.folder, f"a_frame_prev_{_id}.jpg")
             cv2.imwrite(frame_filename, _frame)
 
     def save_sighting_frames(self):
         for _id, _frame in enumerate(self.sighting):
-            frame_filename = os.path.join(self.folder + '/', f"frame_{_id:04d}.jpg")
+            frame_filename = os.path.join(self.folder + '/', f"b_frame_{_id:04d}.jpg")
             if isinstance(_frame, Results):
                 _frame = _frame.plot()  # Extracts an image (NumPy array) with detections
             cv2.imwrite(frame_filename, _frame)
 
     def save_after_frames(self):
         for _id, _frame in enumerate(self.frames_after):
-            frame_filename = os.path.join(self.folder, f"frame_after_{_id}.jpg")
+            frame_filename = os.path.join(self.folder, f"c_frame_after_{_id}.jpg")
             cv2.imwrite(frame_filename, _frame)

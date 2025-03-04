@@ -1,5 +1,4 @@
 import cv2
-import os
 import imageDetection
 from sighting import Sighting
 
@@ -21,11 +20,10 @@ def extract_frames_with_classes(video_path, output_folder, frame_interval=1):
         return
 
     frame_count = 0
-    saved_count = 0
 
     sightings = []
     sightings_count = 0
-    frames_to_save_after_sighting = 60
+    frames_to_save_after_sighting = 30
 
     frames_before_sighting = []
 
@@ -68,4 +66,4 @@ def extract_frames_with_classes(video_path, output_folder, frame_interval=1):
     cap.release()
     for _sighting in sightings:
         _sighting.save_frames()
-    print(f"Extraction complete! {saved_count} frames saved in '{output_folder}'.")
+    print(f"Extraction complete! {frame_count} frames saved in '{output_folder}'.")
