@@ -5,7 +5,6 @@ import request
 import time
 
 start_time = time.time()  # Start timer
-# TODO: how long videos will be coming?
 video_path = "test.mp4"
 frame_interval = 2
 
@@ -19,10 +18,9 @@ folder_path = Path("sightings")
 for folder in folder_path.iterdir():
     if folder.is_dir():
         folder_name = "sightings/"+folder.name
-        videoMaker.make_video(folder_name, folder_name+'/'+output_video, frame_rate)
-
-# TODO: fetch after complete
-# request.post()
+        video_name = videoMaker.make_video(folder_name, folder_name+'/'+output_video, frame_rate)
+        # TODO: fetch after complete
+        # request.post(video_name)
 
 end_time = time.time()  # End timer
 elapsed_time = end_time - start_time

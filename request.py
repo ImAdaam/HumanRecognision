@@ -1,21 +1,18 @@
 import requests
 from requests.auth import HTTPBasicAuth
+import configparser
 
-def post(url, data, auth):
-    # Define your URL
-    url = "https://example.com/api/endpoint"
+def post(path):
 
-    # Your data to send in the POST request
-    data = {
-        "video": "sightings/extracted_frames_0/video.mp4"
-    }
+    config = configparser.ConfigParser()
+    config.read("config.ini")
 
-    # Your Basic Auth credentials
-    username = "rover_v1"
-    password = "rover_v1_pw"
+    # Open the video file in binary mode
+    with open(path, "rb") as video_file:
+        data = {"video": video_file}
 
-    # Make the POST request with Basic Authentication
-    response = requests.post(url, data=data, auth=HTTPBasicAuth(username, password))
+        # Make the POST request with Basic Authentication
+        response = requests.post(config["request"]["url"], data=data, auth=HTTPBasicAuth(config["request"]["username"], config["request"]["password"]))
 
     # Check the response status
     if response.status_code == 200:

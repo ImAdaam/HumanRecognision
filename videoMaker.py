@@ -26,3 +26,5 @@ def make_video(image_folder, output_video, frame_rate):
     cv2.destroyAllWindows()
 
     print(f"Video saved as {output_video}")
+
+    return output_video
