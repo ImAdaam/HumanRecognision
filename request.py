@@ -7,13 +7,12 @@ def post(url, data, auth):
 
     # Your data to send in the POST request
     data = {
-        "key1": "value1",
-        "key2": "value2"
+        "video": "sightings/extracted_frames_0/video.mp4"
     }
 
     # Your Basic Auth credentials
-    username = "your_username"
-    password = "your_password"
+    username = "rover_v1"
+    password = "rover_v1_pw"
 
     # Make the POST request with Basic Authentication
     response = requests.post(url, data=data, auth=HTTPBasicAuth(username, password))

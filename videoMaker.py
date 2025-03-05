@@ -6,7 +6,6 @@ def make_video(image_folder, output_video, frame_rate):
     images = [img for img in os.listdir(image_folder) if img.endswith((".png", ".jpg", ".jpeg"))]
     if len(images) == 0:
         return
-    images.sort()  # Ensure correct order
 
     # Read the first image to get dimensions
     first_image = cv2.imread(os.path.join(image_folder, images[0]))

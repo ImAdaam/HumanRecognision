@@ -4,8 +4,9 @@
 
 from ultralytics import YOLO
 
-# Load a pretrained YOLO11n model
-model = YOLO("yolo11s.pt")
+# Load a pretrained YOLO11 model
+# model = YOLO("yolo11s.pt") # big
+model = YOLO("yolo11n.pt") # small
 
 TARGET_CLASSES = {0: 'person', 1: 'bicycle', 2: 'car', 3: 'motorcycle', 4: 'airplane', 5: 'bus', 6: 'train', 7: 'truck',
                   8: 'boat', 9: 'traffic light', 10: 'fire hydrant', 11: 'stop sign', 12: 'parking meter', 13: 'bench',
@@ -40,7 +41,8 @@ def analyse(source):
 
 
 def analyse_with_return(source):
-    results = model(source)
+    results = model(source, verbose=False)
+    # results = model(source, device="cuda", verbose=False) # TODO: update torch to use cuda
 
     detections = results[0].boxes  # Get detected bounding boxes
     found_classes = []  # List to store detected target classes
@@ -52,7 +54,6 @@ def analyse_with_return(source):
                 found_classes.append(TARGET_PERSON[class_id])
 
         if found_classes:
-            print(f"Detected: {', '.join(found_classes)}")
             return True, results[0]
 
     return False, results[0]
