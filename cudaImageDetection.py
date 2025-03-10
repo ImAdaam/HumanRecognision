@@ -1,11 +1,13 @@
 import torch
 from ultralytics import YOLO
 
-# Ensure CUDA is available
-device = "cuda" if torch.cuda.is_available() else "cpu"
-print(device)
+# Force CUDA usage and raise an error if not available
+if not torch.cuda.is_available():
+    raise RuntimeError("CUDA is not available. Please check your GPU drivers and PyTorch installation.")
 
-# Load a pretrained YOLO11 model onto the correct device
+device = "cuda"  # Force CUDA usage
+
+# Load YOLO model and move to CUDA
 model = YOLO("yolo11n.pt").to(device)
 
 TARGET_CLASSES = {0: 'person', 1: 'bicycle', 2: 'car', 3: 'motorcycle', 4: 'airplane', 5: 'bus', 6: 'train', 7: 'truck',
@@ -24,7 +26,7 @@ TARGET_CLASSES = {0: 'person', 1: 'bicycle', 2: 'car', 3: 'motorcycle', 4: 'airp
 TARGET_PERSON = {0: 'person'}
 
 def analyse_with_return(source):
-    results = model(source, device=device, verbose=False)
+    results = model(source, device=device, verbose=False)  # Force inference on CUDA
 
     detections = results[0].boxes  # Get detected bounding boxes
     found_classes = []  # List to store detected target classes

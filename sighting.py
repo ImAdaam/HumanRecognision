@@ -41,8 +41,6 @@ class Sighting:
         self.folder = self.folder + '_' + str(self.number)
         os.makedirs(self.folder, exist_ok=True)
 
-
-        # TODO: have to wait for each other
         t1 = threading.Thread(target=self.save_prev_frames())
         t2 = threading.Thread(target=self.save_sighting_frames())
         t3 = threading.Thread(target=self.save_after_frames())
