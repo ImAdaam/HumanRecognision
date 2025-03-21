@@ -1,6 +1,6 @@
 import cv2
 
-import cudaImageDetection
+# import cudaImageDetection
 import imageDetection
 from sighting import Sighting
 
@@ -37,8 +37,8 @@ def extract_frames_with_classes(video_path, output_folder, frame_interval=1):
 
         # Save every nth frame
         if frame_count % frame_interval == 0:
-            # observe, boxed_frame = imageDetection.analyse_with_return(frame)
-            observe, boxed_frame = cudaImageDetection.analyse_with_return(frame)
+            observe, boxed_frame = imageDetection.analyse_with_return(frame)
+            # observe, boxed_frame = cudaImageDetection.analyse_with_return(frame)
 
             # saving the frames before this exact frame
             if len(frames_before_sighting) == frames_to_save_after_sighting:

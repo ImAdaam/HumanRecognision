@@ -12,7 +12,7 @@ def make_video(image_folder, output_video, frame_rate):
     height, width, layers = first_image.shape
 
     # Define the codec and create VideoWriter object
-    fourcc = cv2.VideoWriter_fourcc(*"mp4v")  # Change codec if needed (e.g., 'XVID')
+    fourcc = cv2.VideoWriter_fourcc(*"avc1")  # Change codec if needed (e.g., 'XVID')
     video = cv2.VideoWriter(output_video, fourcc, frame_rate, (width, height))
 
     # Add images to the video

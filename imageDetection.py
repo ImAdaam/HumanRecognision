@@ -2,11 +2,12 @@ import torch
 from ultralytics import YOLO
 
 # Ensure CUDA is available
-device = "cuda" if torch.cuda.is_available() else "cpu"
-print(device)
+# device = "cuda" if torch.cuda.is_available() else "cpu"
+# print(device)
 
 # Load a pretrained YOLO11 model onto the correct device
-model = YOLO("yolo11n.pt").to(device)
+model = YOLO("yolo11n.pt")
+# model = YOLO("yolo11n.pt").to(device)
 
 TARGET_CLASSES = {0: 'person', 1: 'bicycle', 2: 'car', 3: 'motorcycle', 4: 'airplane', 5: 'bus', 6: 'train', 7: 'truck',
                   8: 'boat', 9: 'traffic light', 10: 'fire hydrant', 11: 'stop sign', 12: 'parking meter', 13: 'bench',
@@ -24,7 +25,8 @@ TARGET_CLASSES = {0: 'person', 1: 'bicycle', 2: 'car', 3: 'motorcycle', 4: 'airp
 TARGET_PERSON = {0: 'person'}
 
 def analyse_with_return(source):
-    results = model(source, device=device, verbose=False)
+    # results = model(source, device=device, verbose=False)
+    results = model(source, verbose=False)
 
     detections = results[0].boxes  # Get detected bounding boxes
     found_classes = []  # List to store detected target classes
