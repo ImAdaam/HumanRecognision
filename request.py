@@ -12,10 +12,16 @@ async def post(path):
     password = config["request"]["password"]
 
     async with aiofiles.open(path, "rb") as video_file:
-        data = {"video": await video_file.read()}  # Read file asynchronously
+        data = {
+            "video": await video_file.read(),
+            "username": username,
+            "password": password
+        }  # Read file asynchronously
 
     async with httpx.AsyncClient() as client:
-        response = await client.post(url, data=data, auth=(username, password))
+        # response = await client.post(url, data=data, auth=(username, password))
+        print(url)
+        response = await client.post(url, data=data)
 
     if response.status_code == 200:
         print("Request successful!")
