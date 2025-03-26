@@ -12,21 +12,21 @@ async def post(path):
     password = config["request"]["password"]
 
     async with aiofiles.open(path, "rb") as video_file:
-        data = {
-            "video": await video_file.read(),
-            "username": username,
-            "password": password
-        }  # Read file asynchronously
+        video_bytes = await video_file.read()
 
-    async with httpx.AsyncClient() as client:
-        # response = await client.post(url, data=data, auth=(username, password))
-        response = await client.post(url, data=data)
+    async with httpx.AsyncClient(timeout=30.0) as client:
+        files = {
+            "video": (path, video_bytes, "video/mp4")  # Adjust MIME type if needed
+        }
+        response = await client.post(url, files=files, data={"username": username, "password": password})
 
     if response.status_code == 200:
         print("Request successful!")
         print(response.json())  # or response.text for raw response
     else:
         print("Request failed with status code:", response.status_code)
+        print(response.headers)
+        print(response.json())
 
 # import requests
 # from requests.auth import HTTPBasicAuth
