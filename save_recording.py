@@ -12,7 +12,15 @@ ws.connect()
 
 try:
     while True:
-        time.sleep(150)  # 2.5 minutes
+        time.sleep(30)
+        print("30 secs passed")
+        time.sleep(30)
+        print("30 secs passed")
+        time.sleep(30)
+        print("30 secs passed")
+        time.sleep(30)
+        print("30 secs passed")
+        time.sleep(30)  # 2.5 minutes
         ws.call(requests.SaveReplayBuffer())
         print("Replay buffer saved!")
 
@@ -27,7 +35,8 @@ try:
 
         print(f"Newest file: {newest_file}") # C:\Users\szive\Videos\2025-04-05 08-44-20.mp4
 
-        subprocess.run(["python", "main.py", newest_file])
+        python_path = r'C:\Users\szive\PycharmProjects\HumanDetection\.venv\Scripts\python.exe'  # Full path to the Python where 'ultralytics' is installed
+        subprocess.run([python_path, "main.py", newest_file])
 except KeyboardInterrupt:
     print("Stopped by user.")
     ws.disconnect()
