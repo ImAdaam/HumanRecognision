@@ -4,15 +4,16 @@ import videoFragmentation
 import videoMaker
 import request
 import time
-
+import sys
 
 # async def send_request(video_name):
 #     await request.post(video_name)  # Ensure this is an async function
 
-
 async def main():
     start_time = time.time()  # Start timer
-    video_path = "test.mp4"
+    arg = sys.argv[1]  # First argument passed in
+    print(f"Received argument: {arg}")
+    video_path = arg
     frame_interval = 2
 
     output_folder = "sightings/extracted_frames"
