@@ -11,10 +11,12 @@ import sys
 
 async def main():
     start_time = time.time()  # Start timer
-    # arg = sys.argv[1]  # First argument passed in
-    # print(f"Received argument: {arg}")
-    # video_path = arg
-    video_path = "test.mp4"
+    arg = sys.argv[1]  # First argument passed in
+    print(f"Received argument: {arg}")
+    video_path = Path(arg)
+    print(f"Path: {video_path}")
+    time.sleep(5)
+
     frame_interval = 2
 
     output_folder = "sightings/extracted_frames"

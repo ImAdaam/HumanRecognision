@@ -14,7 +14,14 @@ async def post(path):
     async with aiofiles.open(path, "rb") as video_file:
         video_bytes = await video_file.read()
 
-    async with httpx.AsyncClient(timeout=30.0) as client:
+    timeout = httpx.Timeout(
+        connect=10.0,  # time to connect to the server
+        read=30.0,  # time to wait for the server to respond
+        write=120.0,  # time allowed to send the request body (this is your issue)
+        pool=5.0  # time to wait for a free connection in the pool
+    )
+
+    async with httpx.AsyncClient(timeout=timeout) as client:
         files = {
             "video": (path, video_bytes, "video/mp4")  # Adjust MIME type if needed
         }

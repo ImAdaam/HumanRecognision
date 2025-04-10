@@ -1,4 +1,6 @@
 import os
+import shutil
+
 import cv2
 from ultralytics.engine.results import Results
 import threading
@@ -39,7 +41,9 @@ class Sighting:
 
     def save_frames(self):
         self.folder = self.folder + '_' + str(self.number)
-        os.makedirs(self.folder, exist_ok=True)
+        if os.path.exists(self.folder):
+            shutil.rmtree(self.folder)
+        os.makedirs(self.folder)
 
         t1 = threading.Thread(target=self.save_prev_frames())
         t2 = threading.Thread(target=self.save_sighting_frames())
